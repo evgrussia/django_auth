@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from rest_framework import exceptions
 from .authentication import create_access_token, create_refresh_token, decode_access_token, decode_refresh_token
 from .models import User, UserToken, Reset
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserLoginSerializer
 
 
 class RegisterAPIView(APIView):
@@ -31,12 +31,12 @@ class LoginAPIView(APIView):
         email = request.data['email']
         password = request.data['password']
 
-        user = User.objects.filter(email=request.data['email']).first()
+        user = User.objects.filter(email=email).first()
 
         if not user:
             raise exceptions.AuthenticationFailed('Invalid credentials!')
 
-        if not user.check_password(request.data['password']):
+        if not user.check_password(password):
             raise exceptions.APIException('Invalid credentials!')
 
         access_token = create_access_token(user.id)
@@ -68,7 +68,7 @@ class UserAPIView(APIView):
 
             user = User.objects.filter(pk=id).first()
 
-            return Response(UserSerializer(user).data)
+            return Response(UserLoginSerializer(user).data)
 
         raise exceptions.AuthenticationFailed('unauthenticated')
 
