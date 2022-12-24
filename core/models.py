@@ -10,7 +10,7 @@ class User(AbstractUser):
     last_name = models.CharField(verbose_name='Last name', max_length=255, null=False)
     phone = models.CharField(verbose_name='Phone', max_length=255, null=False)
     telegram = models.CharField(verbose_name='Telegramm', max_length=255, null=False)
-    avatar = models.ImageField(verbose_name='Profile phote', null=True, blank=True, upload_to='avatars')
+    avatar = models.ImageField(verbose_name='Profile photo', null=True, blank=True, upload_to='avatars')
     last_time_visit = models.DateTimeField(verbose_name='Last visit', default=timezone.now)
     volume_PV = models.FloatField(verbose_name='Personal volume', max_length=255, default=0.00)
     volume_APV = models.FloatField(verbose_name='All time Personal volume', max_length=255, default=0.00)
